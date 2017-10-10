@@ -1,0 +1,19 @@
+Searching for "North Korea" in last 50 tweets by @realDonaldTrump:
+naive comps = 6209, KMP comps = 7358, BM comps = 1011
+0. Why would I call China a currency manipulator when they are working with us on the North Korean problem? We will see what happens!
+North Korea appears at index 83
+2. Had a very good call last night with the President of China concerning the menace of North Korea.
+North Korea appears at index 85
+4. I explained to the President of China that a trade deal with the U.S. will be far better for them if they solve the North Korean problem!
+North Korea appears at index 116
+
+The Boyer-Moore algorithm is best for searching tweets because it can shift many indices in
+the case of a mismatch. This is also the case for testRandomly(), where the vast majority of tests
+show that this algorithm finds the match in the least amount of comparisons.
+
+The KMP algorithm performs poorly on this data due to the high variation of characters used, thus the failure
+links are being used more frequently. If the data consisted of repeated sequences of characters, 
+this would probably be a more suitable algorithm.
+
+The naive algorithm will almost always perform slowly unless if the text being searched is
+equal or almost equal to the pattern used.

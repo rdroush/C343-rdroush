@@ -1,0 +1,120 @@
+Description of algorithm:
+
+(connectAllWires())
+The first attempt will be made to find a path without replacing
+any existing wires. If no connection is found so far, each wire
+that has been connected before the current one will be removed,
+the current wire will try to connect again, and the removed wires
+will be replaced. If no connection is found after all attempts, an
+appropriate message is printed. A similar message is also printed if
+the current wire is able to connect, but a replacement cannot do so
+afterwards.
+
+public static Map<Integer, Path> connectAllWires(Chip chip)
+
+paths = new HashMap<Integer, Path>;
+pathComp = new Comparator(p1, p2)->p1.size()-p2.size();
+
+for each Wire
+	curId = Wire.WireId;
+	new PriorityQueue(pathComp) <- pathCandidates.get(curId);
+	findPaths(chip,w);
+	if pathCandidates.curId not empty
+		front <- pathCandidates.get(curId).peek();
+		front <- paths.put(curId);
+		for all Coord : front mark curId);
+	else
+		pathsToReplace <- new HashSet<Integer>;
+		add All paths.keySet() to pathsToReplace;
+		
+		for all w2 : chip.wires
+			w2Id <- w2.wireId;
+			if w2Id not equal curId and w2Id exists in paths
+				for all Coord in paths.get(w2id)
+					if Coord not equal w2.from and Coord not equal w2.to
+						mark Constants.FREE;
+				removed w2Id from paths;
+				replace w2Id in pathCandidates with empty PriorityQueue;
+		findPaths(chip, w)
+		if pathCandidates.get(curId) not empty
+			front <- pathCandidates.get(curId).peek()
+			front <- paths.put(curId);
+			for all Coord : front mark curId;
+		for all w2 : chip.wires
+			w2Id <- w2.wireId;
+			if w2Id not equal curId and w2Id exists in pathstoReplace
+				findPaths(chip, w2Id);
+				if w2Id exists in pathCandidates
+					front3 <- pathCandidates.get(w2Id).peek();
+					front3 <- paths.put(w2Id);
+					for all Coord : front3 mark w2Id;
+				else print "Could not replace " + w2.toString();
+		if curId not exists in pathCandidates
+			print "Could not add " + w.toString();
+				
+			
+
+(findPathsHelper())
+Unless from does not equal the start of the wire, it will be
+added to the current path.
+
+If from equals the end of the wire, the path will be added to
+that wire's path candidates.
+
+If from does not exist, or the current path's length does not
+exceed that of front, each available coordinate will be sorted
+by the distance between from and the end of the wire, and then
+recur if front does not exist or if there is the possibility
+of a shorter path being found.
+
+private static void findPathsHelper(Chip chip, Wire w, Path path, Coord from)
+
+curId <- w.wireId;
+front <- pathCandidates.get(curId).peek();
+
+if from not equals w.from
+	add from to path;
+
+if from equals w.to
+	add path to pathCandidates.get(curId);
+	
+else if front equals null or path size less than front size
+	coordcomp <- Comparator<Coord> (c1, c2) -> score(chip, curId, c1, w.to) - score(chip, curId, c2, w.to);
+	sortedCoords <- new PriorityQueue<Coord>(CoordComp);
+	
+	for all Coord : neighbors of from within chip dimension
+		if Coord is availiable in chip and path not contains Coord
+			add Coord to sortedCoords;
+		while sortedCoords not empty
+			curCoord <- sortedCoords.poll();
+			tempPath <- new Path(w);
+			add all Coord : Path to tempPath;
+			remove index 0 from tempPath;
+			if front equals null or (front not equals null and path size + separation(from, w.to) less than front size
+				findPathsHelper(chip, w tempPath, curCoord);
+
+External structures:
+pathCandidates/front: a Map of wire IDs with priority queues; this always places
+the shortest path at the front. The front is used to detect if more paths
+could be found, and if a path can actually be placed in the solution to
+connectAllPaths();
+sortedCoords: used to sort the coords by their score (discussed below). The most
+optimal coord will take the recursion first and thus solve the grid faster.
+tempPath: a copy of the current path, so that different paths can branch out of
+the one before.
+
+Heuristics:
+separation(): Calculates the distance between two coordinates, a copy of the method
+in the Wire class. Used in the sortedCoords comparator with the current coord and the
+end of the current wire.
+onEdge(): Detects if a coord is on the edge of any existing obstacles/wires. Usually
+an optimal solution hugs the edge of obstacles.
+These two heuristics are combined in the score() method. The lowest score is the desired
+one.
+
+Summary:
+I was able to complete all small grids to the desired effect 
+(7 and 8 correctly do not solve, the conflict resolution fixes grids 6, 9, and 10, and
+the rest are completed with each wire connected on the first attempt.). 
+Additionally, both medium grids and the first two big grids solve very quickly. 
+Anything bigger than that, it still takes a long time.

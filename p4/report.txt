@@ -1,0 +1,46 @@
+Reagan Roush
+rdroush
+Lab Session Thursday 9:30-10:45
+
+Sample text:
+The original text has 110 characters.
+The average length of a code is 2.24 bits.
+The text is encoded in 246 bits.
+The savings is 634 bits.
+The compressed text is encoded in 32 characters.
+The savings is 78 characters.
+Decompressing yields 246 bits.
+The recovered text has 110 characters.
+Compressed string uses 28% amount of bits compared to original.
+
+Moby Dick:
+The original text has 12352 characters.
+The average length of a code is 4.43 bits.
+The text is encoded in 54691 bits.
+The savings is 44125 bits.
+The compressed text is encoded in 6838 characters.
+The savings is 5514 characters.
+Decompressing yields 54691 bits.
+The recovered text has 12352 characters.
+Compressed string uses 55.3% amount of bits compared to original.
+
+Alice in Wonderland: The original text has 163675 characters.
+The average length of a code is 4.60 bits.
+The text is encoded in 752855 bits.
+The savings is 556545 bits.
+The compressed text is encoded in 94108 characters.
+The savings is 69567 characters.
+Decompressing yields 752855 bits.
+The recovered text has 163675 characters.
+Compressed string uses 57.5% amount of bits compared to original.
+
+Tom Sawyer:
+The original text has 402665 characters.
+The average length of a code is 4.59 bits.
+The text is encoded in 1850008 bits.
+The savings is 1371312 bits.
+The compressed text is encoded in 231252 characters.
+The savings is 171413 characters.
+Decompressing yields 1850008 bits.
+The recovered text has 402665 characters.
+Compressed string uses 57.4% amount of bits compared to original.
